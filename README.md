@@ -7,4 +7,4 @@ Use the "userSetup_mysql.txt" to update your database with a username and passwo
 
 About the app.
 
-This application was developed in NetBeans as a JAX web service app using the Maven framework (Java EE 7, NB 8, JDK 1.0.8_25+). It is designed to work with a separate client application which accesses the web service remotely through WSDL files. Separate branches of this repo will be created. One contains a console based client (with menu), the other contains a GUI. The GUI version contains all the functionality of the console based client.
+This application was developed in NetBeans as a JAX web service app using the Maven framework (Java EE 7, NB 8, JDK 1.0.8_25+). It is designed to work with a MySQL database and separate client application (which accesses the web service remotely through WSDL files). Separate branches of this repo will be created. One contains a console based client (with menu), the other contains a GUI. The GUI version contains all the functionality of the console based client.
