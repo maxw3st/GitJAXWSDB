@@ -1,0 +1,2 @@
+CREATE USER 'ctuonline'@'localhost' IDENTIFIED BY 'student';
+grant select, insert, update, delete on sales.* to 'ctuonline'@'localhost';

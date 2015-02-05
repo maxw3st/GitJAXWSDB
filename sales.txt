@@ -1,0 +1,32 @@
+DROP DATABASE IF EXISTS sales;
+
+CREATE DATABASE sales;
+USE sales;
+
+DROP TABLE IF EXISTS `customer`;
+CREATE TABLE `customer` (
+  `id` int(10) NOT NULL,
+  `name` varchar(30) NOT NULL,
+  `login` varchar(10) NOT NULL,
+  `password` varchar(20) NOT NULL,
+    PRIMARY KEY(id)
+);
+
+
+insert into customer values (1, 'Tony', 'tony', 'test');
+insert into customer values (2, 'Angela', 'ang', 'test');
+insert into customer values (3, 'Ryan', 'ryan', 'test');
+insert into customer values (4, 'Ruby', 'ruby', 'test');
+
+DROP TABLE IF EXISTS `product`;
+CREATE TABLE `product` (
+  `id` int(10) NOT NULL,
+  `name` varchar(30) NOT NULL,
+  `description` varchar(50) NOT NULL,
+  `price` FLOAT(10,4) NOT NULL,
+   PRIMARY KEY(id)
+);
+
+insert into product values (1, 'Lightsaber', 'Cutting tool', 100.99);
+insert into product values (2, 'Speeder', 'Transport', 10000.92);
+insert into product values (3, 'Death Star', 'Redecorator', 199999.99);
