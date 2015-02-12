@@ -8,6 +8,7 @@ package svcclient;
  * 
  * week 5 CRUD application with SOAP based messaging
  * This is the client application created for the server side application SvcDemo
+ * v0.0.3
  */
 
 import java.util.Iterator;

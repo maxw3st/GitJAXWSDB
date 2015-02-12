@@ -1,12 +1,11 @@
 package svcclient;
 
 import java.awt.Toolkit;
-import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.List;
 import javax.swing.JOptionPane;
-import static svcclient.SvcClient.allCustomers;
-import static svcclient.SvcClient.allProducts;
+import javax.swing.JTextField;
+import javax.swing.UIManager;
 import ws.customers.Customer;
 import ws.customers.CustomerService;
 import ws.customers.CustomerService_Service;
@@ -20,6 +19,7 @@ import ws.products.ProductServices_Service;
  * 
  * version 0.0.3
  */
+
 public class SvcClientGUI extends javax.swing.JFrame {
     
     private static String objectIs; // use this for if/else blocks determining product or customer inside button handlers
@@ -38,22 +38,18 @@ public class SvcClientGUI extends javax.swing.JFrame {
      */
     public SvcClientGUI() {
         initComponents();
+    
+        label5.setText( "Range 2:" );
         
-        label1.setText( "Customer ID:" ); // textfield labels set by initially
-        label2.setText( "Name:" );
-        label3.setText( "Login:" );
-        label4.setText( "Password:" );
-        label5.setText( "Range 2" );
-        
-        //setIcon(); // see the method just below main at the bottom of the class
+        //setIcon(); // set in palette properties using code from setIcon method below
         this.setLocationRelativeTo( null ); // center the GUI in the display monitor
     }
 
     private void setIcon() {
         
         // this bit of wizardry brought to you by anhpnh2801 on YouTube: https://www.youtube.com/watch?v=40ikcEonWng
-        setIconImage( Toolkit.getDefaultToolkit().getImage( 
-            getClass().getResource( "ringsAvatar32x32trans.png" ) ) );
+        //setIconImage( Toolkit.getDefaultToolkit().getImage( 
+        //    getClass().getResource( "ringsAvatar32x32trans.png" ) ) );
     }
    
     /**
@@ -87,200 +83,313 @@ public class SvcClientGUI extends javax.swing.JFrame {
         update = new javax.swing.JButton();
         delete = new javax.swing.JButton();
         closeApp = new javax.swing.JButton();
+        cnt = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("JAX-WS Client");
+        setIconImage(Toolkit.getDefaultToolkit().getImage( 
+            getClass().getResource( "ringsAvatar32x32trans.png" ) ) );
+    setResizable(false);
 
-        chooseCust.setText("Customers");
-        chooseCust.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chooseCustActionPerformed(evt);
-            }
-        });
+    chooseCust.setText("Customers");
+    chooseCust.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            chooseCustActionPerformed(evt);
+        }
+    });
 
-        chooseProd.setText("Products");
-        chooseProd.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chooseProdActionPerformed(evt);
-            }
-        });
+    chooseProd.setText("Products");
+    chooseProd.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            chooseProdActionPerformed(evt);
+        }
+    });
 
-        title.setText("Distributed Web Service Client");
+    title.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+    title.setText("Distributed Web Service Client");
 
-        display.setColumns(20);
-        display.setRows(5);
-        jScrollPane1.setViewportView(display);
+    display.setColumns(42);
+    display.setRows(5);
+    jScrollPane1.setViewportView(display);
 
-        label1.setText("Custonmer ID:");
+    label1.setText("Customer ID:");
+    label1.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
-        label2.setText("Name:");
+    label2.setText("Name:");
+    label2.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+    label2.setMaximumSize(new java.awt.Dimension(64, 14));
+    label2.setMinimumSize(new java.awt.Dimension(64, 14));
+    label2.setPreferredSize(new java.awt.Dimension(64, 14));
 
-        label3.setText("Login:");
+    label3.setText("Login:");
+    label3.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+    label3.setMaximumSize(new java.awt.Dimension(64, 14));
+    label3.setMinimumSize(new java.awt.Dimension(64, 14));
+    label3.setPreferredSize(new java.awt.Dimension(64, 14));
 
-        label4.setText("Password:");
+    label4.setText("Password:  ");
+    label4.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+    label4.setMaximumSize(new java.awt.Dimension(64, 14));
+    label4.setMinimumSize(new java.awt.Dimension(64, 14));
+    label4.setPreferredSize(new java.awt.Dimension(64, 14));
 
-        label5.setText("Range 2:");
+    input3.setMinimumSize(new java.awt.Dimension(14, 20));
+    input3.setPreferredSize(new java.awt.Dimension(14, 20));
 
-        find.setText("Find by ID");
-        find.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                findActionPerformed(evt);
-            }
-        });
+    input4.setMinimumSize(new java.awt.Dimension(14, 20));
+    input4.setPreferredSize(new java.awt.Dimension(14, 20));
 
-        findAll.setText("Find All");
-        findAll.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                findAllActionPerformed(evt);
-            }
-        });
+    label5.setText("Range 2:");
 
-        findRange.setText("Range");
-        findRange.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                findRangeActionPerformed(evt);
-            }
-        });
+    find.setText("Find by ID");
+    find.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            findActionPerformed(evt);
+        }
+    });
 
-        create.setText("Create");
-        create.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                createActionPerformed(evt);
-            }
-        });
+    findAll.setText("Find All");
+    findAll.setMaximumSize(new java.awt.Dimension(81, 23));
+    findAll.setMinimumSize(new java.awt.Dimension(81, 23));
+    findAll.setPreferredSize(new java.awt.Dimension(81, 23));
+    findAll.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            findAllActionPerformed(evt);
+        }
+    });
 
-        update.setText("Update");
-        update.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                updateActionPerformed(evt);
-            }
-        });
+    findRange.setText("Range");
+    findRange.setMaximumSize(new java.awt.Dimension(81, 23));
+    findRange.setMinimumSize(new java.awt.Dimension(81, 23));
+    findRange.setPreferredSize(new java.awt.Dimension(81, 23));
+    findRange.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            findRangeActionPerformed(evt);
+        }
+    });
 
-        delete.setText("Delete");
-        delete.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                deleteActionPerformed(evt);
-            }
-        });
+    create.setText("Create");
+    create.setMaximumSize(new java.awt.Dimension(81, 23));
+    create.setMinimumSize(new java.awt.Dimension(81, 23));
+    create.setPreferredSize(new java.awt.Dimension(81, 23));
+    create.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            createActionPerformed(evt);
+        }
+    });
 
-        closeApp.setText("EXIT");
-        closeApp.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                closeAppActionPerformed(evt);
-            }
-        });
+    update.setText("Update");
+    update.setMaximumSize(new java.awt.Dimension(81, 23));
+    update.setMinimumSize(new java.awt.Dimension(81, 23));
+    update.setPreferredSize(new java.awt.Dimension(81, 23));
+    update.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            updateActionPerformed(evt);
+        }
+    });
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(input2, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(label3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+    delete.setText("Delete");
+    delete.setMaximumSize(new java.awt.Dimension(81, 23));
+    delete.setMinimumSize(new java.awt.Dimension(81, 23));
+    delete.setPreferredSize(new java.awt.Dimension(81, 23));
+    delete.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            deleteActionPerformed(evt);
+        }
+    });
+
+    closeApp.setText("EXIT");
+    closeApp.setMaximumSize(new java.awt.Dimension(81, 23));
+    closeApp.setMinimumSize(new java.awt.Dimension(81, 23));
+    closeApp.setPreferredSize(new java.awt.Dimension(81, 23));
+    closeApp.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            closeAppActionPerformed(evt);
+        }
+    });
+
+    cnt.setText("Count");
+    cnt.setMaximumSize(new java.awt.Dimension(81, 23));
+    cnt.setMinimumSize(new java.awt.Dimension(81, 23));
+    cnt.setPreferredSize(new java.awt.Dimension(81, 23));
+    cnt.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            cntActionPerformed(evt);
+        }
+    });
+
+    javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+    getContentPane().setLayout(layout);
+    layout.setHorizontalGroup(
+        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGap(0, 0, Short.MAX_VALUE)
+            .addComponent(title)
+            .addGap(176, 176, 176))
+        .addGroup(layout.createSequentialGroup()
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(195, 195, 195)
+                    .addComponent(chooseCust)
+                    .addGap(18, 18, 18)
+                    .addComponent(chooseProd))
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(32, 32, 32)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(label4, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(4, 4, 4)
+                                    .addComponent(input4, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createSequentialGroup()
                                     .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(label4, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(input4, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(input1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(label5))
-                            .addComponent(input3, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(17, 17, 17)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(4, 4, 4)
-                        .addComponent(range2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(findRange, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(delete, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(findAll, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(update))
+                                    .addGap(4, 4, 4)
+                                    .addComponent(input1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(label5)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(range2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(label3, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(label2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGap(4, 4, 4)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(input2, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(input3, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGap(62, 62, 62)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(find)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(create, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(71, 71, 71))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(closeApp, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(101, 101, 101))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(title)
-                .addGap(206, 206, 206))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(206, 206, 206)
-                        .addComponent(chooseCust)
-                        .addGap(18, 18, 18)
-                        .addComponent(chooseProd))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(61, 61, 61)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 453, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(62, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(title)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(chooseProd)
-                    .addComponent(chooseCust))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(label1)
-                    .addComponent(input1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(label5)
-                    .addComponent(range2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(create)
-                    .addComponent(find))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(input2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(label2)
-                    .addComponent(findAll)
-                    .addComponent(update))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(input3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(label3)
-                    .addComponent(delete)
-                    .addComponent(findRange))
-                .addGap(3, 3, 3)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(input4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(label4)
-                    .addComponent(closeApp))
-                .addContainerGap(28, Short.MAX_VALUE))
-        );
+                                        .addComponent(create, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(findRange, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                            .addComponent(delete, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                            .addComponent(findAll, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                            .addComponent(update, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(cnt, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(closeApp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
+            .addContainerGap(32, Short.MAX_VALUE))
+    );
+    layout.setVerticalGroup(
+        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(layout.createSequentialGroup()
+            .addContainerGap()
+            .addComponent(title)
+            .addGap(7, 7, 7)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(chooseProd)
+                .addComponent(chooseCust))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
+            .addGap(18, 18, 18)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(label1)
+                        .addComponent(input1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(label5)
+                        .addComponent(range2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(8, 8, 8)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(input2, javax.swing.GroupLayout.DEFAULT_SIZE, 21, Short.MAX_VALUE)
+                        .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(8, 8, 8)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(input3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(label3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(8, 8, 8)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(label4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(input4, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(layout.createSequentialGroup()
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(create, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(find, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(findAll, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(update, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(delete, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(findRange, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(closeApp, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cnt, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addGap(28, 28, 28))
+    );
 
-        pack();
+    pack();
     }// </editor-fold>//GEN-END:initComponents
+    
+    private void allCustomers() {
+        
+        display.setText( "" ); // clear the textarea before reading in table
+        
+        // connecting to service on localhost (could be any URL with the Web Service deployed)        
+        CustomerService cs = new CustomerService_Service().getCustomerServicePort();
+
+        // header for Customer table
+        display.setText( "Customers\nID\tName\tLogin\tPassword\n\n" );
+        for( Customer cst : cs.findAll() ) { // prints a table of all customers in the database table
+
+            // could just use the field calls in the output string, but this makes a formatted string easier to read 
+            int crID = cst.getId();
+            String nm = cst.getName();
+            String lgn = cst.getLogin();
+            String pw = cst.getPassword();
+
+            // format output into a table
+            String cConsole = String.format(
+                "%-10d\t%-20s\t%-10s\t%-15s", crID, nm, lgn, pw );
+            display.append( cConsole );
+            display.append("\n"); // line space 
+        }        
+    } // end method allCustomers
+    
+    private void allProducts() {
+        
+        display.setText( "" ); // clear the textarea before reading in table
+        
+        // connecting to service on localhost (could be any URL with the Web Service deployed)
+        ProductServices ps = new ProductServices_Service().getProductServicesPort(); 
+
+        // header for Product table
+        String id = "ID";
+        String nm = "Name";
+        String des = "Description";
+        String prce = "Price";
+        String pHeader = String.format( "Products\n%-10s\t%-36s%-14s\t%-14s\n\n", 
+            id, nm, des, prce );
+        display.setText( pHeader );
+        
+        for( Product prod : ps.findAll() ) { //  the findAll() initiates a SOAP data transfer     
+                    
+            int pID = prod.getId();
+            String nam = prod.getName();
+            String desc = prod.getDescription();
+            float pric = prod.getPrice();
+
+            // format output into a table
+            String pConsole = String.format(                        
+                "%-10d\t%-20s%24s\t$%,14.2f", pID, nam, desc, pric );
+            display.append( pConsole );
+            display.append("\n"); // line space
+        }
+    }
     
     private void closeAppActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeAppActionPerformed
         System.exit( 0 );
@@ -396,7 +505,9 @@ public class SvcClientGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_findActionPerformed
 
     private void findAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_findAllActionPerformed
-                
+        
+        display.setText( "" ); // clear the text area before adding new list     
+        
         input1.setText( "" ); // clear the textarea before displaying new find all results
         input2.setText( "" );
         input3.setText( "" );
@@ -407,56 +518,18 @@ public class SvcClientGUI extends javax.swing.JFrame {
             
             case "custs": {
                 
-                display.setText( "" ); // clear the textarea before reading in table
-                // connecting to service on localhost (could be any URL with the Web Service deployed)        
-                CustomerService cs = new CustomerService_Service().getCustomerServicePort();
-
-                // header for Customer table
-                display.setText( "Customers\nID\tName\tLogin\tPassword\n\n" );
-                for( Customer cst : cs.findAll() ) { // prints a table of all customers in the database table
-
-                    // could just use the field calls in the output string, but this makes a formatted string easier to read 
-                    int crID = cst.getId();
-                    String nm = cst.getName();
-                    String lgn = cst.getLogin();
-                    String pw = cst.getPassword();
-
-                    // format output into a table
-                    String cConsole = String.format(
-                        "%-10d\t%-20s\t%-10s\t%-15s", crID, nm, lgn, pw );
-                    display.append( cConsole );
-                    display.append("\n"); // line space 
-                }                    
+                allCustomers();       
             }
             break;
                 
             case "prods": {
                 
-                display.setText( "" ); // clear the textarea before reading in table
-                // connecting to service on localhost (could be any URL with the Web Service deployed)
-                ProductServices ps = new ProductServices_Service().getProductServicesPort(); 
-
-                // header for Product table
-                display.setText( "Products\nID\tName\tDescription\t\tPrice\n\n" );
-                for( Product prod : ps.findAll() ) { //  the findAll() initiates a SOAP data transfer     
-                    
-                    int pID = prod.getId();
-                    String nam = prod.getName();
-                    String desc = prod.getDescription();
-                    float pric = prod.getPrice();
-
-                    // format output into a table
-                    String pConsole = String.format(                        
-                        "%-10d\t%-24s%-32s$ %,10.2f", pID, nam, desc, pric );
-                    display.append( pConsole );
-                    display.append("\n"); // line space
-                }                    
+                allProducts();                  
             }
             break;
                 
             default:
-                display.append( "error reading in database table" );
-                
+                display.append( "error reading in database table" );                
         }        
     }//GEN-LAST:event_findAllActionPerformed
 
@@ -508,9 +581,14 @@ public class SvcClientGUI extends javax.swing.JFrame {
                 // create a sublist of products from index p1iD to p2iD
                 prange = ps.findAll().subList( p1iD - 1, p2iD );
         
-                // print out a header for the product table output
-                display.setText( 
-                    "Products\nID\t\tName\tDescription\tPrice\n\n" );
+                // header for Product table
+                String id = "ID";
+                String nm = "Name";
+                String des = "Description";
+                String prce = "Price";
+                String pHeader = String.format( "Products\n%-10s\t%-36s%-14s\t%-14s\n\n", 
+                    id, nm, des, prce );
+                display.setText( pHeader );
         
                 // iterate over the sublist of product objects: crange and print them out 
                 for ( Iterator< Product > it = prange.iterator(); it.hasNext(); ) {
@@ -518,13 +596,13 @@ public class SvcClientGUI extends javax.swing.JFrame {
                     Product prd = it.next(); // assign the next customer object
 
                     int prID = prd.getId(); // assign the object values, just to keep the output string readable            
-                    String nm = prd.getName();
+                    String nam = prd.getName();
                     String dsc = prd.getDescription();
                     float pric = prd.getPrice();
 
                     // format output into a table
                     String pConsole = String.format( 
-                        "%-10d\t%-24s%-32s$ %,10.2f\n", prID, nm, dsc, pric );
+                        "%-10d\t%-20s%24s\t$%,16.2f\n", prID, nam, dsc, pric );
                     display.append( pConsole );
                 }
         
@@ -569,7 +647,9 @@ public class SvcClientGUI extends javax.swing.JFrame {
                 cst.setPassword( cssWrd );
 
                 nc.create( cst ); // use the web service to create a new customer 
-                display.append( "\n" );                
+                display.append( "\n" );
+                
+                allCustomers();
             }
             break;
             
@@ -592,6 +672,8 @@ public class SvcClientGUI extends javax.swing.JFrame {
         
                 //allProducts();
                 display.append( "\n" );
+                
+                allProducts();
             }
             break;
             
@@ -637,7 +719,9 @@ public class SvcClientGUI extends javax.swing.JFrame {
                 cst.setLogin( clgin );        
                 cst.setPassword( cssWrd );
 
-                nc.edit( cst ); // use the web service to update the customer in the database        
+                nc.edit( cst ); // use the web service to update the customer in the database  
+                
+                allCustomers();
             }
             break;
             
@@ -672,6 +756,8 @@ public class SvcClientGUI extends javax.swing.JFrame {
                 prd.setPrice( prc );
 
                 ps.edit( prd ); // use the web service to update the product in the database 
+                
+                allProducts();
             }
             break;
             
@@ -698,7 +784,9 @@ public class SvcClientGUI extends javax.swing.JFrame {
         
                 Customer cst = nc.find( ciD ); // find the customer in the object array, by id
         
-                nc.remove( cst ); // delete the customer from the table         
+                nc.remove( cst ); // delete the customer from the table   
+                
+                allCustomers();
             }
             break;
             
@@ -710,7 +798,9 @@ public class SvcClientGUI extends javax.swing.JFrame {
         
                 Product prd = ps.find( piD ); // find the product in the object array, by id       
         
-                ps.remove( prd ); // delete the customer from the table           
+                ps.remove( prd ); // delete the customer from the table    
+                
+                allProducts();
             }
             break;
             
@@ -724,6 +814,37 @@ public class SvcClientGUI extends javax.swing.JFrame {
         input4.setText( "" );
         range2.setText( "" );  
     }//GEN-LAST:event_deleteActionPerformed
+
+    private void cntActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cntActionPerformed
+        
+        switch( objectIs ) {
+            
+            case "custs": {
+                
+               CustomerService nc = new CustomerService_Service().getCustomerServicePort(); 
+        
+                int ccnt = nc.count(); // return the number of customers in the database
+        
+                display.setText( "Customer count: " 
+                    + String.valueOf( ccnt ) + "\n");      
+            }
+            break;
+                
+            case "prods": {
+                
+                ProductServices ps = new ProductServices_Service().getProductServicesPort();
+        
+                int pcnt = ps.count(); // return the # of products in the database
+        
+                display.setText( "Product count: " 
+                    + String.valueOf( pcnt ) + "\n" );
+            }
+            break;
+                
+            default:
+                display.append( "error counting database elements" );                
+        }
+    }//GEN-LAST:event_cntActionPerformed
 
     /**
      * @param args the command line arguments
@@ -751,12 +872,16 @@ public class SvcClientGUI extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(SvcClientGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                
+            
+                // input4 was cutting off the bottoms of letters, by palette default, so…
+                UIManager.getLookAndFeelDefaults().put(
+                "input4.setMargin",new java.awt.Insets(0, 2, 0, 2));
+        
                 new SvcClientGUI().setVisible(true);
             }
         });
@@ -766,6 +891,7 @@ public class SvcClientGUI extends javax.swing.JFrame {
     private javax.swing.JButton chooseCust;
     private javax.swing.JButton chooseProd;
     private javax.swing.JButton closeApp;
+    private javax.swing.JButton cnt;
     private javax.swing.JButton create;
     private javax.swing.JButton delete;
     private javax.swing.JTextArea display;
