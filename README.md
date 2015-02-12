@@ -1,5 +1,5 @@
 # Git-JAX-WS-DB
-Server side JAX-WS with MySQL database Client apps will be added as branches
+Server side JAX-WS with MySQL database Client apps have been added. The code shown is only that contained in the NetBeans project source folders. The entire application includes a server-side application project folder ("SvcDemo"), and a separate client project folder ("SvcClient"). 
 
 DB-setup-instructions:
 
