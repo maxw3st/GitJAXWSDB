@@ -4,7 +4,6 @@ import java.awt.Toolkit;
 import java.util.Iterator;
 import java.util.List;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 import javax.swing.UIManager;
 import ws.customers.Customer;
 import ws.customers.CustomerService;
@@ -50,7 +49,7 @@ public class SvcClientGUI extends javax.swing.JFrame {
         // this bit of wizardry brought to you by anhpnh2801 on YouTube: https://www.youtube.com/watch?v=40ikcEonWng
         //setIconImage( Toolkit.getDefaultToolkit().getImage( 
         //    getClass().getResource( "ringsAvatar32x32trans.png" ) ) );
-    }
+    } // end setIcon method // this method is implemented within palette properties
    
     /**
      * This method is called from within the constructor to initialize the form.
@@ -109,6 +108,7 @@ public class SvcClientGUI extends javax.swing.JFrame {
     title.setText("Distributed Web Service Client");
 
     display.setColumns(42);
+    display.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
     display.setRows(5);
     jScrollPane1.setViewportView(display);
 
@@ -343,7 +343,7 @@ public class SvcClientGUI extends javax.swing.JFrame {
         CustomerService cs = new CustomerService_Service().getCustomerServicePort();
 
         // header for Customer table
-        display.setText( "Customers\nID\tName\tLogin\tPassword\n\n" );
+        display.setText( "Customers\nID\tName\t\tLogin\tPassword\n\n" );
         for( Customer cst : cs.findAll() ) { // prints a table of all customers in the database table
 
             // could just use the field calls in the output string, but this makes a formatted string easier to read 
@@ -354,7 +354,7 @@ public class SvcClientGUI extends javax.swing.JFrame {
 
             // format output into a table
             String cConsole = String.format(
-                "%-10d\t%-20s\t%-10s\t%-15s", crID, nm, lgn, pw );
+                "%-10d\t%-20s\t%-14s\t%-15s", crID, nm, lgn, pw );
             display.append( cConsole );
             display.append("\n"); // line space 
         }        
@@ -479,7 +479,7 @@ public class SvcClientGUI extends javax.swing.JFrame {
                 String pw = cst.getPassword();
                 
                 String cConsole = String.format( // print out the object formatted  for columns
-                    "Customers\nID\tName\tLogin\tPassword\n%-10d\t"
+                    "Customers\nID\tName\t\tLogin\tPassword\n%-10d\t"
                     + "%-20s\t%-10s\t%-15s\n", crID, nm, lgn, pw );
                 display.setText( cConsole );                
             } catch ( NumberFormatException nfExcept ) {
@@ -549,7 +549,7 @@ public class SvcClientGUI extends javax.swing.JFrame {
                 crange = nc.findAll().subList( c1iD - 1, c2iD );
         
                 // print out a header for the customer table output
-                display.setText( "Customers\nID\tName\tLogin\tPassword\n\n" );
+                display.setText( "Customers\nID\tName\t\tLogin\tPassword\n\n" );
         
                 // iterate over the sublist of customer objects: crange, and print them out 
                 for ( Iterator< Customer > it = crange.iterator(); it.hasNext(); ) {
