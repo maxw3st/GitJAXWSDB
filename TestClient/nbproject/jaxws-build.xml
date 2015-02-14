@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+        *** GENERATED FROM jax-ws.xml - DO NOT EDIT !                             ***
+        *** TO MODIFY wsimport options USE Web Service node -> Edit WS Attributes ***
+        *** TO CHANGE TARGETS GENERATED TO jaxws-build.xml COPY THOSE             ***
+        *** TARGETS TO ../build.xml AND MODIFY THAT FILE INSTEAD                  ***
+
+        --><project xmlns:xalan="http://xml.apache.org/xslt" xmlns:j2seproject3="http://www.netbeans.org/ns/j2se-project/3" xmlns:jaxws="http://www.netbeans.org/ns/jax-ws/1">
+    <!--
+                ===================
+                JAX-WS WSIMPORT SECTION
+                ===================
+            -->
+    <target name="wsimport-init" depends="init">
+        <mkdir dir="${build.generated.sources.dir}/jax-ws"/>
+        <taskdef name="wsimport" classname="com.sun.tools.ws.ant.WsImport">
+            <classpath path="${libs.jaxws21.classpath}"/>
+        </taskdef>
+    </target>
+    <target name="wsimport-client-ProductServices" depends="wsimport-init">
+        <mkdir dir="${build.generated.dir}/jax-wsCache/ProductServices"/>
+        <property name="wsdl-ProductServices" location="xml-resources/web-service-references/ProductServices/wsdl/localhost_56890/SvcDemo/ProductServices.wsdl"/>
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/ProductServices" destdir="${build.generated.dir}/jax-wsCache/ProductServices" wsdl="${wsdl-ProductServices}" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://localhost:56890/SvcDemo/ProductServices?wsdl" xnocompile="true" xendorsed="true">
+            <depends file="${wsdl-ProductServices}"/>
+            <produces dir="${build.generated.dir}/jax-wsCache/ProductServices"/>
+        </wsimport>
+        <copy todir="${build.generated.sources.dir}/jax-ws">
+            <fileset dir="${build.generated.dir}/jax-wsCache/ProductServices">
+                <include name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="wsimport-client-clean-ProductServices" depends="-init-project">
+        <delete dir="${build.generated.dir}/jax-wsCache/ProductServices"/>
+        <delete dir="${build.generated.sources.dir}/jax-ws/ws/products"/>
+    </target>
+    <target name="wsimport-client-CustomerService" depends="wsimport-init">
+        <mkdir dir="${build.generated.dir}/jax-wsCache/CustomerService"/>
+        <property name="wsdl-CustomerService" location="xml-resources/web-service-references/CustomerService/wsdl/localhost_56890/SvcDemo/CustomerService.wsdl"/>
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/CustomerService" destdir="${build.generated.dir}/jax-wsCache/CustomerService" wsdl="${wsdl-CustomerService}" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://localhost:56890/SvcDemo/CustomerService?wsdl" xnocompile="true" xendorsed="true">
+            <depends file="${wsdl-CustomerService}"/>
+            <produces dir="${build.generated.dir}/jax-wsCache/CustomerService"/>
+        </wsimport>
+        <copy todir="${build.generated.sources.dir}/jax-ws">
+            <fileset dir="${build.generated.dir}/jax-wsCache/CustomerService">
+                <include name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="wsimport-client-clean-CustomerService" depends="-init-project">
+        <delete dir="${build.generated.dir}/jax-wsCache/CustomerService"/>
+        <delete dir="${build.generated.sources.dir}/jax-ws/ws/customers"/>
+    </target>
+    <target name="wsimport-client-generate" depends="wsimport-client-ProductServices, wsimport-client-CustomerService"/>
+</project>
