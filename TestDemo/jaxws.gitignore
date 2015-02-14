@@ -1,0 +1,6 @@
+# ignored files and folders
+build/*
+dist/*
+nbproject/*
+web/*
+build.xml
