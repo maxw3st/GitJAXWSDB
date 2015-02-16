@@ -569,16 +569,16 @@ public class TestClientGUI extends javax.swing.JFrame {
                 // iterate over the sublist of customer objects: crange, and print them out 
                 for ( Iterator< Customer > it = crange.iterator(); it.hasNext(); ) {
             
-                Customer ct = it.next(); // assign the next customer object
-            
-                int crID = ct.getId(); // assign the object values, just to keep the output string readable            
-                String nm = ct.getName();
-                String lgn = ct.getLogin();
-                String pw = ct.getPassword();
-            
-                String cConsole = String.format( // print out the object formatted  for columns
-                    "%-10d\t%-20s\t%-10s\t%-15s\n", crID, nm, lgn, pw );
-                display.append( cConsole );
+                    Customer ct = it.next(); // assign the next customer object
+
+                    int crID = ct.getId(); // assign the object values, just to keep the output string readable            
+                    String nm = ct.getName();
+                    String lgn = ct.getLogin();
+                    String pw = ct.getPassword();
+
+                    String cConsole = String.format( // print out the object formatted  for columns
+                        "%-10d\t%-20s\t%-10s\t%-15s\n", crID, nm, lgn, pw );
+                    display.append( cConsole );
                 }
                 display.append( "\n" );
                 crange.clear(); // clear the List so it doesn't get extended every time the method is run
@@ -709,6 +709,8 @@ public class TestClientGUI extends javax.swing.JFrame {
 
     private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
         
+        display.setText( "" ); // clear the textarea before reading in table 
+        
         switch( objectIs ) {
             
             case "custs": {
@@ -784,7 +786,7 @@ public class TestClientGUI extends javax.swing.JFrame {
                 display.setText( "Failed to create new object." );
         } // end switch
                 
-        input1.setText( "" ); // clear the textarea before displaying new find all results
+        input1.setText( "" ); // clear the textfields
         input2.setText( "" );
         input3.setText( "" );
         input4.setText( "" );
@@ -792,6 +794,8 @@ public class TestClientGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_updateActionPerformed
 
     private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
+        
+        display.setText( "" ); // clear the textarea before reading in table 
         
         switch( objectIs ) {
             
@@ -827,7 +831,7 @@ public class TestClientGUI extends javax.swing.JFrame {
                 display.setText( "Failed to delete object." );
         } // end switch
                 
-        input1.setText( "" ); // clear the textarea before displaying new find all results
+        input1.setText( "" ); // clear the textfields
         input2.setText( "" );
         input3.setText( "" );
         input4.setText( "" );
